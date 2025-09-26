@@ -9,28 +9,20 @@ use core::panic::PanicInfo;
 
 #[unsafe(no_mangle)]
 pub extern "C" fn _start() -> ! {
-    println!("Hello World {}", "!");
-    #[cfg(test)]
     test_main();
     loop {}
 }
 
-#[cfg(test)]
+fn test_runner(tests: &[&dyn Fn()]) {
+    unimplemented!()
+}
+
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     blog_os::test_panic_handler(info)
 }
 
-#[cfg(not(test))]
-#[panic_handler]
-fn panic(info: &PanicInfo) -> ! {
-    println!("{}", info);
-    loop {}
-}
-
-fn main() {}
-
 #[test_case]
-fn trivial_assertion() {
-    assert_eq!(1, 1);
+fn test_println() {
+    println!("test_println output");
 }
